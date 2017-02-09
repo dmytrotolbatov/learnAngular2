@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Response} from '@angular/http';
+
 import {PhoneBookService} from "../phonebook.service";
 
 @Component({
@@ -28,21 +29,17 @@ import {PhoneBookService} from "../phonebook.service";
 `
 })
 
-export class PhoneBookViewComponent{
+export class PhoneBookViewComponent implements OnInit{
   private userId: string;
-  user = {};
+  private user = {};
 
   constructor (private route: ActivatedRoute, private phonebookService: PhoneBookService){
     this.route.params.subscribe((params: Params) => this.userId = params['id']);
   }
 
   ngOnInit(){
-    // this.httpService.getData().subscribe((data)=>this.users = data);
     this.phonebookService.view(this.userId).subscribe((data: Response) => {
       this.user = data.json();
-      console.log(this.user);
     });
-    // this.httpService.postData().subscribe((data: Response) => this.users=data.json());
   }
-
 }
